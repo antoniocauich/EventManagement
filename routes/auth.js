@@ -1,6 +1,6 @@
-import express from "express";
-const router = express.Route();
+import { Router } from "express";
 import { register, login } from "../controllers/authcontroller.js";
+const router = Router();
 
 //ruta register
 router.post("/register", register);
