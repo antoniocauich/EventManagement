@@ -2,8 +2,8 @@ import { Event } from "../models/Event.js";
 
 // Crear un nuevo evento (solo para usuarios autenticados)
 export const createEvent = async (req, res) => {
-  const { name, description, date, location, capacity } = req.body;
   try {
+    const { name, description, date, location, capacity } = req.body;
     const newEvent = await Event.create({
       name,
       description,
@@ -45,9 +45,9 @@ export const getEventById = async (req, res) => {
 // Actualizar un evento (solo el creador o administrador puede hacerlo)
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
-  const { name, description, date, location, capacity } = req.body;
 
   try {
+    const { name, description, date, location, capacity } = req.body;
     const event = await Event.findByPk(id);
 
     // Verificar si el evento existe
@@ -63,11 +63,11 @@ export const updateEvent = async (req, res) => {
     }
 
     // Actualizar el evento
-    event.name = name;
-    event.description = description;
-    event.date = date;
-    event.location = location;
-    event.capacity = capacity;
+    event.name = name || event.name;
+    event.description = description || event.description;
+    event.date = date || event.date;
+    event.location = location || event.location;
+    event.capacity = capacity || event.capacity;
     await event.save();
 
     res.status(200).json(event);
